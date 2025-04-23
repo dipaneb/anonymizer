@@ -4,7 +4,7 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const auth = require('../middleware/auth')
 
-// GET /api/documents : Liste des documents d’un utilisateur
+// GET /api/documents
 router.get('/', auth, async (req, res) => {
   try {
     const docs = await prisma.document.findMany({
@@ -18,7 +18,7 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
-// GET /api/documents/:id/download : Télécharger le texte anonymisé
+// GET /api/documents/:id/download
 router.get('/:id/download', auth, async (req, res) => {
   try {
     const doc = await prisma.document.findFirst({
@@ -39,7 +39,7 @@ router.get('/:id/download', auth, async (req, res) => {
   }
 })
 
-// DELETE /api/documents/:id : Supprimer un document
+// DELETE /api/documents/:id
 router.delete('/:id', auth, async (req, res) => {
   try {
     const deleted = await prisma.document.deleteMany({
@@ -59,64 +59,3 @@ router.delete('/:id', auth, async (req, res) => {
 })
 
 module.exports = router
-
-/* const express = require('express')
-const router = express.Router()
-const Document = require('../models/Document') // modèle mongoose
-const auth = require('../middleware/auth')     // middleware d’auth
-
-// GET /api/documents : Liste des documents
-router.get('/', auth, async (req, res) => {
-  try {
-    const docs = await Document.find({ userId: req.user.id }).sort({ date: -1 })
-    res.json(docs)
-  } catch (err) {
-    res.status(500).json({ error: 'Erreur serveur lors de la récupération des documents' })
-  }
-})
-
-// GET /api/documents/:id/download : Télécharger un doc anonymisé
-router.get('/:id/download', auth, async (req, res) => {
-  try {
-    const doc = await Document.findOne({ _id: req.params.id, userId: req.user.id })
-
-    if (!doc) {
-      return res.status(404).json({ error: 'Document non trouvé' })
-    }
-
-    res.setHeader('Content-Disposition', 'attachment; filename="document-anonymise.txt"')
-    res.setHeader('Content-Type', 'text/plain')
-    res.send(doc.anonymizedText)
-  } catch (err) {
-    res.status(500).json({ error: 'Erreur serveur lors du téléchargement' })
-  }
-})
-
-// DELETE /api/documents/:id : Supprimer un doc
-router.delete('/:id', auth, async (req, res) => {
-  try {
-    const doc = await Document.findOneAndDelete({ _id: req.params.id, userId: req.user.id })
-
-    if (!doc) {
-      return res.status(404).json({ error: 'Document non trouvé' })
-    }
-
-    res.json({ message: 'Document supprimé' })
-  } catch (err) {
-    res.status(500).json({ error: 'Erreur serveur lors de la suppression' })
-  }
-})
-
-module.exports = router
-*/
-
-
-/* const express = require('express');
-const router = express.Router();
-
-router.get('/', (req, res) => {
-  res.send('Documents route working!');
-});
-
-module.exports = router;
- */
