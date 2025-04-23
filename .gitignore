@@ -1,0 +1,16 @@
+# Node backend
+backend/node_modules
+backend/.env
+
+# Next.js frontend
+frontend/.next
+frontend/node_modules
+frontend/.env
+frontend/out
+
+# Node.js logs
+npm-debug.log
+yarn-error.log
+
+# macOS
+.DS_Store
